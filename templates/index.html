@@ -14,6 +14,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script>
+        // Suppress browser extension (MetaMask/Web3) injected script errors
+        window.addEventListener('unhandledrejection', function(event) {
+            if (event.reason && (event.reason.message?.includes('MetaMask') || event.reason.toString().includes('MetaMask'))) {
+                event.preventDefault();
+            }
+        });
+        window.ethereum = undefined;
+
+        // Tailwind config
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -30,6 +39,7 @@
             }
         }
     </script>
+
     <style>
         body {
             background-color: #0B0F19;
