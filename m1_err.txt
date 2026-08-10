@@ -1,0 +1,12 @@
+[32m22:04:40[0m | [1mINFO    [0m | [36m<module>[0m:[36m1078[0m – Configuration: targets=[default=http://localhost:8765] output_dir=scraped_data interval=5s max_cycles=1 headless=True proxy_file=None workers=0
+[32m22:04:40[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m894[0m – Targets resolved: default=http://localhost:8765
+[32m22:04:40[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m913[0m – No proxies → one local (direct) worker per target.
+[32m22:04:40[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m918[0m – Using Chromium at C:\Users\ZAGZY\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe
+[32m22:04:41[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m763[0m – [default:w00] Worker starting for target=default url=http://localhost:8765
+[32m22:04:41[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m716[0m – [default:w00] Navigating to http://localhost:8765
+[32m22:04:42[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m720[0m – [default:w00] Table '#metrics-table' found via direct.
+[32m22:04:43[0m | [1mINFO    [0m | [36m_discover_column_indices[0m:[36m405[0m – Column indices discovered: {'timestamp': 0, 'event_name': 1, 'numeric_result': 2}
+[32m22:04:55[0m | [32m[1mSUCCESS [0m | [36m_save_csv[0m:[36m482[0m – [direct] Cycle 0001 → wrote 82 rows to scraped_data\default\dashboard_data_direct_cycle0001_20260809T200455Z.csv
+[32m22:04:55[0m | [32m[1mSUCCESS [0m | [36mrun_worker[0m:[36m854[0m – [default:w00] Reached max_cycles=1. Worker done.
+[32m22:04:55[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m873[0m – [default:w00] Context closed.
+[32m22:04:55[0m | [32m[1mSUCCESS [0m | [36mrun_scraper_async[0m:[36m982[0m – All workers finished. Output dir: C:\Users\ZAGZY\.gemini\antigravity-ide\scratch\realtime-dashboard-scraper\scraped_data

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: uvicorn app:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=${DATABASE_URL:-}
+      - SUPABASE_DB_URL=${SUPABASE_DB_URL:-}
+    depends_on:
+      - redis
+    volumes:
+      - ./scraped_data:/app/scraped_data
+      - ./logs:/app/logs
+
+  celery_worker:
+    build: .
+    command: celery -A tasks.celery worker --loglevel=info --concurrency=2
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=${DATABASE_URL:-}
+      - SUPABASE_DB_URL=${SUPABASE_DB_URL:-}
+    depends_on:
+      - redis
+    volumes:
+      - ./scraped_data:/app/scraped_data
+      - ./logs:/app/logs
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"

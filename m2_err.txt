@@ -1,0 +1,21 @@
+[32m22:06:54[0m | [1mINFO    [0m | [36m<module>[0m:[36m1078[0m – Configuration: targets=[betking=https://administrative-bennett-walking-var.trycloudflare.com, betano=https://administrative-bennett-walking-var.trycloudflare.com, msport=https://administrative-bennett-walking-var.trycloudflare.com] output_dir=scraped_data interval=5s max_cycles=1 headless=True proxy_file=proxies.txt workers=2
+[32m22:06:54[0m | [1mINFO    [0m | [36mload_proxies[0m:[36m175[0m – proxy_loader | Reading 8 lines from C:\Users\ZAGZY\.gemini\antigravity-ide\scratch\realtime-dashboard-scraper\proxies.txt
+[32m22:06:54[0m | [32m[1mSUCCESS [0m | [36mload_proxies[0m:[36m210[0m – proxy_loader | Loaded 5 valid proxy/proxies.
+[32m22:06:54[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m894[0m – Targets resolved: betking=https://administrative-bennett-walking-var.trycloudflare.com, betano=https://administrative-bennett-walking-var.trycloudflare.com, msport=https://administrative-bennett-walking-var.trycloudflare.com
+[32m22:06:54[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m908[0m – Proxy rotation: 5 proxies loaded, pool: proxies 5 | healthy 5 in-use 0 cooling 0 quarantined 0.
+[32m22:06:54[0m | [1mINFO    [0m | [36mrun_scraper_async[0m:[36m918[0m – Using Chromium at C:\Users\ZAGZY\AppData\Local\ms-playwright\chromium_headless_shell-1234\chrome-headless-shell-win64\chrome-headless-shell.exe
+[32m22:06:54[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m763[0m – [betking:w00] Worker starting for target=betking url=https://administrative-bennett-walking-var.trycloudflare.com
+[32m22:06:54[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m763[0m – [betano:w01] Worker starting for target=betano url=https://administrative-bennett-walking-var.trycloudflare.com
+[32m22:06:54[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m716[0m – [betking:w00] Navigating to https://administrative-bennett-walking-var.trycloudflare.com
+[32m22:06:54[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m716[0m – [betano:w01] Navigating to https://administrative-bennett-walking-var.trycloudflare.com
+[32m22:06:57[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m720[0m – [betking:w00] Table '#metrics-table' found via p00.
+[32m22:06:58[0m | [1mINFO    [0m | [36m_discover_column_indices[0m:[36m405[0m – Column indices discovered: {'timestamp': 0, 'event_name': 1, 'numeric_result': 2}
+[32m22:06:59[0m | [1mINFO    [0m | [36m_navigate_with_recovery[0m:[36m720[0m – [betano:w01] Table '#metrics-table' found via p01.
+[32m22:07:00[0m | [1mINFO    [0m | [36m_discover_column_indices[0m:[36m405[0m – Column indices discovered: {'timestamp': 0, 'event_name': 1, 'numeric_result': 2}
+[32m22:07:15[0m | [32m[1mSUCCESS [0m | [36m_save_csv[0m:[36m482[0m – [p00] Cycle 0001 → wrote 198 rows to scraped_data\betking\dashboard_data_p00_cycle0001_20260809T200715Z.csv
+[32m22:07:15[0m | [32m[1mSUCCESS [0m | [36mrun_worker[0m:[36m854[0m – [betking:w00] Reached max_cycles=1. Worker done.
+[32m22:07:15[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m873[0m – [betking:w00] Context closed.
+[32m22:07:15[0m | [32m[1mSUCCESS [0m | [36m_save_csv[0m:[36m482[0m – [p01] Cycle 0001 → wrote 199 rows to scraped_data\betano\dashboard_data_p01_cycle0001_20260809T200715Z.csv
+[32m22:07:15[0m | [32m[1mSUCCESS [0m | [36mrun_worker[0m:[36m854[0m – [betano:w01] Reached max_cycles=1. Worker done.
+[32m22:07:15[0m | [1mINFO    [0m | [36mrun_worker[0m:[36m873[0m – [betano:w01] Context closed.
+[32m22:07:16[0m | [32m[1mSUCCESS [0m | [36mrun_scraper_async[0m:[36m982[0m – All workers finished. Output dir: C:\Users\ZAGZY\.gemini\antigravity-ide\scratch\realtime-dashboard-scraper\scraped_data

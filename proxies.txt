@@ -1,0 +1,8 @@
+# proxies.txt – Webshare dedicated HTTP proxies
+# One proxy per line, URI notation: http://user:pass@host:port
+#
+http://rwyqonni:13rzh27ci73w@31.59.20.176:6754
+http://rwyqonni:13rzh27ci73w@31.56.127.193:7684
+http://rwyqonni:13rzh27ci73w@45.38.107.97:6014
+http://rwyqonni:13rzh27ci73w@198.105.121.200:6462
+http://rwyqonni:13rzh27ci73w@64.137.96.74:6641
