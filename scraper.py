@@ -264,11 +264,21 @@ def _load_targets_from_args(args: argparse.Namespace) -> list[Target]:
             raise FileNotFoundError(f"--target-file not found: {path}")
         with path.open("r", encoding="utf-8") as fh:
             data = json.load(fh)
-        raw_targets = data.get("targets", [])
-        if not isinstance(raw_targets, list):
-            raise ValueError("'targets' in JSON must be a list of {name, url, table_id?} objects.")
-        for item in raw_targets:
-            targets.append(Target.from_dict(item))
+
+        if isinstance(data, dict):
+            if "targets" in data and isinstance(data["targets"], list):
+                for item in data["targets"]:
+                    if isinstance(item, dict):
+                        targets.append(Target.from_dict(item))
+            else:
+                for name, url in data.items():
+                    if isinstance(url, str):
+                        targets.append(Target(name=name, url=url, table_id="metrics-table"))
+        elif isinstance(data, list):
+            for item in data:
+                if isinstance(item, dict):
+                    targets.append(Target.from_dict(item))
+
 
     # From repeated --targets flag
     for spec in args.targets:

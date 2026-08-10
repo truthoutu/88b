@@ -163,15 +163,19 @@
         <!-- Engine Control Toolbar -->
         <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-800">
             <div class="flex items-center space-x-3">
-                <button id="btnStartModal" onclick="openStartModal()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center space-x-2">
+                <button id="btnStartModal" onclick="quickStartEngine()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center space-x-2">
                     <i class="fa-solid fa-play"></i>
                     <span>Start Engine</span>
+                </button>
+                <button onclick="openStartModal()" title="Engine Settings" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all">
+                    <i class="fa-solid fa-gear"></i>
                 </button>
                 <button id="btnStop" onclick="stopEngine()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white font-semibold text-sm shadow-lg shadow-rose-600/20 transition-all opacity-50 cursor-not-allowed flex items-center space-x-2" disabled>
                     <i class="fa-solid fa-square"></i>
                     <span>Stop Engine</span>
                 </button>
             </div>
+
 
             <div class="flex items-center space-x-3 w-full md:w-auto">
                 <button onclick="fetchDbTelemetry()" class="w-full md:w-auto px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition-all flex items-center justify-center space-x-2">
@@ -571,9 +575,36 @@
         }
 
 
+        async function quickStartEngine() {
+            try {
+                const payload = {
+                    target_file: "targets.json",
+                    proxy_file: "proxies.txt",
+                    workers: 9,
+                    interval: 10,
+                    max_cycles: 0,
+                    show_browser: false
+                };
+                const res = await fetch('/api/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (res.ok) {
+                    console.log("9-Bot Swarm Engine launched successfully:", result.message);
+                } else {
+                    alert("Start Error: " + (result.detail || "Could not launch engine."));
+                }
+            } catch (err) {
+                alert("Network error starting engine: " + err);
+            }
+        }
+
         function openStartModal() {
             document.getElementById('startModal').classList.remove('hidden');
         }
+
 
         function closeStartModal() {
             document.getElementById('startModal').classList.add('hidden');

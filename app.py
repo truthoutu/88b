@@ -106,7 +106,7 @@ async def _run_scraper_task(req: StartRequest):
     _start_time = time.monotonic()
     _job_config = req.model_dump()
 
-    target_file_path = req.target_file if Path(req.target_file).exists() else None
+    target_file_path = req.target_file if Path(req.target_file).exists() else ("targets.json" if Path("targets.json").exists() else None)
     proxy_file_path = req.proxy_file if (req.proxy_file and Path(req.proxy_file).exists()) else None
 
     args = argparse.Namespace(
@@ -118,13 +118,14 @@ async def _run_scraper_task(req: StartRequest):
         output_dir="scraped_data",
         interval=req.interval,
         max_cycles=req.max_cycles,
-        show_browser=req.show_browser,
+        show_browser=False,
         no_console=True,
         log_level="INFO",
         proxy_file=proxy_file_path,
-        workers=req.workers,
+        workers=req.workers or 9,
         worker_timeout=30,
     )
+
 
     try:
         logger.info("Starting background Playwright scraper engine via Web UI...")
