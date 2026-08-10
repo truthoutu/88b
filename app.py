@@ -167,6 +167,7 @@ async def get_index():
 
 
 @app.post("/api/start")
+@app.post("/start")
 async def start_scraper(req: StartRequest):
     global _active_task
     if _active_task and not _active_task.done():
@@ -177,6 +178,7 @@ async def start_scraper(req: StartRequest):
 
 
 @app.post("/api/stop")
+@app.post("/stop")
 async def stop_scraper():
     global _active_task
     if not _active_task or _active_task.done():
@@ -189,6 +191,7 @@ async def stop_scraper():
         pass
     _active_task = None
     return {"status": "success", "message": "Scraper engine stopped successfully."}
+
 
 
 
