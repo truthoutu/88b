@@ -107,22 +107,34 @@ def _find_chromium_exe() -> str | None:
     None if nothing is found (in which case Playwright falls back to its
     own resolution logic).
     """
-    local_app = os.environ.get("LOCALAPPDATA", "")
-    ms_playwright = os.path.join(local_app, "ms-playwright")
+    search_paths = []
 
-    # Prefer the lighter headless-shell when available
-    patterns = [
-        os.path.join(ms_playwright, "chromium_headless_shell-*",
-                     "chrome-headless-shell-win64", "chrome-headless-shell.exe"),
-        os.path.join(ms_playwright, "chromium-*",
-                     "chrome-win64", "chrome.exe"),
-    ]
-    for pattern in patterns:
-        matches = sorted(glob.glob(pattern), reverse=True)  # newest build first
-        for match in matches:
-            if os.path.isfile(match):
-                return match
+    # Windows user path
+    local_app = os.environ.get("LOCALAPPDATA", "")
+    if local_app:
+        search_paths.append(os.path.join(local_app, "ms-playwright"))
+
+    # Linux / Docker paths
+    search_paths.extend([
+        "/ms-playwright",
+        os.path.expanduser("~/.cache/ms-playwright"),
+        "/root/.cache/ms-playwright",
+    ])
+
+    for base in search_paths:
+        patterns = [
+            os.path.join(base, "chromium_headless_shell-*", "chrome-headless-shell-linux", "chrome-headless-shell"),
+            os.path.join(base, "chromium-*", "chrome-linux", "chrome"),
+            os.path.join(base, "chromium_headless_shell-*", "chrome-headless-shell-win64", "chrome-headless-shell.exe"),
+            os.path.join(base, "chromium-*", "chrome-win64", "chrome.exe"),
+        ]
+        for pattern in patterns:
+            matches = sorted(glob.glob(pattern), reverse=True)  # newest build first
+            for match in matches:
+                if os.path.isfile(match):
+                    return match
     return None
+
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1139,15 +1151,22 @@ async def run_scraper_async(
 
     # ── Launch all workers under one Rich Live display ────────────────────────
     async with async_playwright() as pw:
-        browser: Browser = await pw.chromium.launch(
-            headless=not getattr(args, "show_browser", False),
-            executable_path=exe_path,
-            args=[
+        launch_kwargs = {
+            "headless": not getattr(args, "show_browser", False),
+            "args": [
                 "--disable-blink-features=AutomationControlled",
                 "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
                 "--disable-infobars",
             ],
-        )
+        }
+        if exe_path:
+            launch_kwargs["executable_path"] = exe_path
+
+        browser: Browser = await pw.chromium.launch(**launch_kwargs)
+
         context_semaphore = asyncio.Semaphore(worker_count)
         stop_display = asyncio.Event()
         show_console = not getattr(args, "no_console", False)

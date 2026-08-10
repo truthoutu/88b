@@ -134,6 +134,9 @@ async def _run_scraper_task(req: StartRequest):
         logger.warning("Scraper task cancelled by user request.")
     except Exception as exc:
         logger.error("Scraper engine task failed: {}", exc)
+        import traceback
+        traceback.print_exc()
+
     finally:
         _start_time = None
         # Send final idle state
